@@ -1,7 +1,9 @@
 <%= render 'navbar'%>
 <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(https://localfresh.com/wp-content/uploads/iStock-1281139645-1024x683.jpg);">
   <div class="container">
-    <h1 class="text-right" id="banner-typed-text"></h1>
+    <div class="row justify-content-end pr-4 align-items-end">
+      <h1 id="banner-typed-text"></h1>
+    </div>
   </div>
 </div>
 <div class="container">
@@ -17,9 +19,10 @@
     <% @lists.each do |list| %>
       <div class="movie-card col-6 col-lg-4 p-3 mb-3">
         <%= link_to list_path(list), class: "link-unstyled h3 list-group-item p-0" do%>
-          <% unless list.movies.empty? %>
-          <img src="<%=list.movies.sample.poster_url %>", style = "margin:0; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px;">
-          <% end %>
+          <%# unless list.movies.empty? %>
+          <%= cl_image_tag list.photo.key, height: 300, width: 400, crop: :fill, style: "margin:0; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px;"%>
+          <!-- <img src="<%=list.movies.sample.poster_url %>", style = "margin:0; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px;"> -->
+          <%# end %>
           <div class="text-center p-3" style="border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
           <%= list.name%>
           </div>
@@ -44,6 +47,7 @@
         <div id="new-movie-form">
           <%= simple_form_for(@list) do |f| %>
           <%= f.input :name %>
+          <%= f.input :photo, as: :file %>
           <%= f.submit "Create new list", class: "btn btn-lg btn-primary" %>
           <% end %>
         </div>

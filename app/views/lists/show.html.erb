@@ -1,8 +1,7 @@
 <%= render 'navbar'%>
-<% arr=[] %>
-<% @movies.each do |movie| %>
-  <% arr << movie.title %>
-<% end %>
+<div class="row justify-content-center mt-4">
+ <%= cl_image_tag @list.photo.key, height: 300, width: 300, crop: :fill%>
+ </div>
 <div class="container">
   <h1 class="text-center mt-4 mb-0"><%= @list.name %></h1>
   <div class="row justify-content-end">
