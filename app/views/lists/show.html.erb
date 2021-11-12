@@ -7,22 +7,22 @@
   <h1 class="text-center mt-4 mb-0"><%= @list.name %></h1>
   <div class="row justify-content-end">
     <!-- <button class="btn btn-primary mt-0 mb-0" id="new-movie-button" style="">Add new movie to list</button> -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newMovieModal">
       Add new movie to list
     </button>
   </div>
   <div class = "row">
     <% @list.movies.each do |movie| %>
-      <div class="col-4 mt-5">
+      <div class="movie-card col-6 col-lg-4 mt-3 p-3 border">
         <div class="movie-container row flex-column">
-          <p class="col text-center h5">
-          <%= movie.title%>
-          <%= movie.rating %>
-          <%= link_to bookmark_path(@list.bookmarks.select {|bookmark| bookmark.movie_id == movie.id}[0]), method: :delete do%>
-            <i class="fas fa-trash"></i>
-          <% end %>
+          <%= image_tag "#{movie.poster_url}", alt: "Poster", width: 200, class: "col"%>
+          <p class="col text-center h5 p-2">
+            <%= movie.title%>
+            <%= movie.rating %>
+            <%= link_to bookmark_path(@list.bookmarks.select {|bookmark| bookmark.movie_id == movie.id}[0]), method: :delete do%>
+              <i class="fas fa-trash"></i>
+            <% end %>
           </p>
-          <%= image_tag "#{movie.poster_url}", alt: "Poster", width: 200, class: "col" %>
         </div>
       </div>
     <% end %>
@@ -30,7 +30,7 @@
 </div>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="newMovieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -44,7 +44,7 @@
         <div id="new-movie-form">
           <%= simple_form_for [@list, @bookmark] do |f| %>
             <%= f.input :comment %>
-            <%= f.association :movie, as: :select, collection: arr, prompt: 'Select Movie' %>
+            <%= f.association :movie, input_html: {multiple: true, class: "multiple-select"}, include_hidden: false %>
             <%= f.submit "Add Movie" , class: "btn btn-lg btn-primary" %>
             <% end %>
         </div>

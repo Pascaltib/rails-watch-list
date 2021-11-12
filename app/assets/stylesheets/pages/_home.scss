@@ -1,1 +1,13 @@
 // Specific CSS for your home-page
+.link-unstyled, .link-unstyled:link{
+  color: inherit;
+  text-decoration: inherit;
+}
+.cropped {
+    width: 200px; /* width of container */
+    object-fit: cover;
+}
+.movie-card{
+  border-radius: 8px;
+  box-shadow: 1px 1px 10px #eeeeee;
+}

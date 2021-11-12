@@ -1,16 +1,53 @@
 <%= render 'navbar'%>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(https://localfresh.com/wp-content/uploads/iStock-1281139645-1024x683.jpg);">
+  <div class="container">
+    <h1 class="text-right" id="banner-typed-text"></h1>
+  </div>
+</div>
 <div class="container">
-  <h1>Home Page!</h1>
+  <div class="row justify-content-between align-items-end mt-5 mb-3">
+    <h2 class="col-3">Your lists</h2>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Create a new list!
+    </button>
+  </div>
+
   <div class = "row">
     <% @lists.each do |list| %>
-      <div class="col-12">
-        <%= link_to list_path(list) do%>
-        <%= list.name%>
+      <div class="movie-card col-6 col-lg-4 p-3 mb-3">
+        <%= link_to list_path(list), class: "link-unstyled h3 list-group-item p-0" do%>
+          <% unless list.movies.empty? %>
+          <img src="<%=list.movies.sample.poster_url %>", style = "margin:0; width: 100%; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+          <% end %>
+          <div class="text-center p-3" style="border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+          <%= list.name%>
+          </div>
         <% end %>
       </div>
     <% end %>
   </div>
-  <%= link_to new_list_path do%>
-    <button>Create a new list!</button>
-  <% end %>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> New List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="new-movie-form">
+          <%= simple_form_for(@list) do |f| %>
+          <%= f.input :name %>
+          <%= f.submit "Create new list", class: "btn btn-lg btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

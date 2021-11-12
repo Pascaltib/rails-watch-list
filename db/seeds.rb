@@ -12,7 +12,7 @@ json = open(url).read
 content = JSON.parse(json)["results"]
 poster_path = "https://image.tmdb.org/t/p/w500"
 
-content.first(10).each do |movie|
+content.first(20).each do |movie|
   poster_url_full = poster_path + movie["poster_path"]
   Movie.create!(title: movie["original_title"], overview: movie["overview"], poster_url: poster_url_full, rating: movie["vote_average"])
 end

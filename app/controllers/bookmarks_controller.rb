@@ -1,16 +1,21 @@
 class BookmarksController < ApplicationController
   def create
     @movies = Movie.all
-    @movie = Movie.select { |movie| movie.title == params[:bookmark][:movie_id] }[0]
-    @bookmark = Bookmark.new(bookmark_params)
-    @bookmark.movie = @movie
+
+    # @movie_selection = @movies.select { |movie| movie.id == params[:bookmark][:movie_id]}
+    @movie_selection = params[:bookmark][:movie_id]
     @list = List.find(params[:list_id])
-    @bookmark.list = @list
-    if @bookmark.save
-      redirect_to list_path(@list)
-    else
-      render 'lists/show'
+    @bookmark = Bookmark.new
+
+    @movie_selection.each do |movie_index|
+      bookmark = Bookmark.new
+      movie = Movie.find(movie_index)
+      bookmark.movie = movie
+      bookmark.list = @list
+      bookmark.save
+
     end
+    redirect_to list_path(@list)
   end
 
   def destroy
